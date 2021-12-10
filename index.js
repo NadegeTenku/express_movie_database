@@ -1,11 +1,15 @@
 const {sequelize} = require('./db')
 
 const {Movie} = require('./models/Movie')
-// const {Crew} = require('./models/Crew')
-// const {Cast} = require('./models/Cast')
+const {Crew} = require('./models/Crew')
+const {Cast} = require('./models/Cast')
 
-// Crew.belongsTo(Movie)
-// Movie.hasMany(Crew)
+//belongsTo creates the association between the Movie and the Crew which generates the ID for the model.
+Movie.hasMany(Crew)
+Crew.belongsTo(Movie)
+
+Movie.hasMany(Cast)
+Cast.belongsTo(Movie)
 
 const indexMovie = [
     {
@@ -36,8 +40,36 @@ const indexMovie = [
     }
 ]
 
+const indexCrew = [
+    {position: 'Director', name: 'Ruben Fleischer', department: 0},
+    {position: 'Camera Operator', name: 'Michael Watson', department: 288},
+    {position: 'Cast', name: 'John Papsidera', department: 0},
+    {position: 'Costume', name: 'Kelli Jones', department: 36}
+]
 
-.index()
+const indexCast = [
+    {role_id: 101, name: 'Sandra Bullock', gender: 'Female', age: 45},
+    {role_id: 103, name: 'Ryan Raynolds', gender: 'Male', age: 33},
+    {role_id: 105, name: 'Betty White', gender: 'Female', age: 87},
+    {role_id: 107, name: 'Mary Steenburgen', gender: 'Female', age: 56},
+    {role_id: 109, name: 'Denise OHare', gender: 'Male', age: 44}
+]
+
+//basically inserts data into the db
+const index = async() => {
+    try {
+        await sequelize.sync({force: true}) 
+        await Movie.bulkCreate(indexMovie, {validate: true})
+        await Crew.create(indexCrew, {validate: true})
+        await Cast.bulkCreate(indexCast, {validate: true})
+        console.log('Data successfully inserted')
+        sequelize.close()
+    } catch (err) {console.log(err)}
+}
+
+
+//calls the index function to perform the task 
+index()
 .then(() => {
     console.log('Association completed successfully.')
 })

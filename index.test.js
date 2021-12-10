@@ -1,4 +1,8 @@
-const {Movie, Crew, Cast, sequelize} = require('./index');
+const {Movie} = require('./models/Movie')
+const {Crew} = require('./models/Crew')
+const {Cast} = require('./models/Cast')
+const {sequelize} = require('./db')
+
 describe('Movie Database', function () {
 
      beforeAll(async() => {
@@ -10,37 +14,73 @@ describe('Movie Database', function () {
             {genre: 'Fiction', title: 'Avatar', release: '2009/12/18', rating: 4.5},
             {genre: 'Horror', title: 'Drag me to hell', release: '2009/05/29', rating: 4.0}
         ]
-        await Movie.bulkcreate(arrayOfMovies)
+           await Movie.bulkCreate(arrayOfMovies)
+      
 
+        const crew1 =  {position: 'Director', name: 'Ruben Fleischer', department: 0}
+            await Crew.create(crew1)
+
+        const crew2 =  {position: 'Camera Operator', name: 'Michael Watson', department: 288}
+            await Crew.create(crew2)
+
+        const crew3 =  {position: 'Cast', name: 'John Papsidera', department: 0}
+            await Crew.create(crew3)
+
+        const crew4 =  {position: 'Costume', name: 'Kelli Jones', department: 36}
+           
+            await Crew.create(crew4)
+
+
+        const arrayOfCasts = [
+            {role_id: 101, name: 'Sandra Bullock', gender: 'Female', age: 45},
+            {role_id: 103, name: 'Ryan Raynolds', gender: 'Male', age: 33},
+            {role_id: 105, name: 'Betty White', gender: 'Female', age: 87},
+            {role_id: 107, name: 'Mary Steenburgen', gender: 'Female', age: 56},
+            {role_id: 109, name: 'Denise OHare', gender: 'Male', age: 44}
+        ]
+            await Cast.bulkCreate(arrayOfCasts)
+
+    
     })
     
-    // test('movies have genre', async() => {
-    //     const testMovie = await Movie.findOne({where: {genre: 'Action'}});
-    //     expect (testMovie.genre).toBe('Action')
-    // })
+    test('movies have genre', async() => {
+        const testMovie = await Movie.findOne({where: {genre: 'Fiction'}});
+        expect(testMovie.genre).toBe('Fiction')
+    })
 
-    // test('movies have genre', async() => {
-    //     const testMovie = await Movie.findAll({where: {genre: 'Action'}});
-    //     expect (testMovie.genre).toBe('Action')
-    // })
+    test('movies have genre', async() => {
+        const testMovie = await Movie.findAll({where: {genre: 'Action'}});
+        expect (testMovie[0].genre).toBe('Action')
+        expect (testMovie[1].genre).toBe('Action')
+    })
 
-    // test('movies have title', async() => {
-    //     const testMovie = await Movie.findOne({where: {title: 'The Proposal'}});
-    //     expect (testMovie.title).toBe('The Proposal')
-    // })
+    test('movies have title', async() => {
+        const testMovie = await Movie.findOne({where: {title: 'The Proposal'}});
+        expect (testMovie.title).toBe('The Proposal')
+    })
+
+    test('crew has a name', async() => {
+        const testCrew = await Crew.findOne({where: {name: 'John Papsidera'}});
+        expect (testCrew.title).toBe('The Proposal')
+    })
+
+    test('crew member has a position', async() => {
+        const testCrew = await Crew.findAll({where: {position: 'Cast'}});
+        expect (testCrew[0].position).toBe('Cast')
+    })
 
     // test('movies can have many crew members', async() => {
     //     const testMovie = await Movie.findOne({where: {title: 'Hard to kill'}});
-    //     const testCrew1 = await Crew.findOne({where: {agent: 'Director'}});
-    //     const testCrew2 = await Crew.findOne({where: {agent: 'Camera Operator'}})
+    //     const testCrew1 = await Crew.findOne({where: {position: 'Director'}});
+    //     const testCrew2 = await Crew.findOne({where: {position: 'Camera Operator'}})
     //     await testMovie.addCrew(testCrew1)
     //     await testMovie.addCrew(testCrew2)
-    //     expect(crewList.length).toBe(4)
+    //     expect(crewList.length).toBe(2)
     //     expect(crewList[0] instanceof Crew).toBeTruthy()
-    //     expect(crewList[0].position).toMatch('Camera Operator')
+    //     expect(crewList[0].position).toMatch('Director')
     // })
 
 
-    afterAll(async(() => {sequelize.close()
-    }))
+    afterAll(async() => {sequelize.close()
+    })
 })
