@@ -9,6 +9,7 @@ Did my assiciations on my index.js file and then later created the server.js fil
 
 
                        <<ISSUES>>
+Department_no on Crews displays null on the sqlite table.
 Lines 82-85 on index.test.js have an error that I couldn't fix after numerous attempts.
 Lines 96 & 97 show errors that I could not fix as well. Please help me look at that entire section that I commented out for possible errors.
 Got an error message when I ran node index.js. I tried but didn't succeed in debugging it. Image linked below.
