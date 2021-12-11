@@ -9,8 +9,8 @@ Did my assiciations on my index.js file and then later created the server.js fil
 
 
                        <<ISSUES>>
-Lines 75-78 on index.test.js have an error that I couldn't fix after numerous attempts.
-Lines 87 & 88 show errors that I could not fix as well. Please help me look at that entire section that I commented out for possible errors.
+Lines 82-85 on index.test.js have an error that I couldn't fix after numerous attempts.
+Lines 96 & 97 show errors that I could not fix as well. Please help me look at that entire section that I commented out for possible errors.
 Got an error message when I ran node index.js. I tried but didn't succeed in debugging it. Image linked below.
 Could not GET my models to listen on my server.
 Could not CRUD the models on my postman due to the unsolved issue with node index.js.
