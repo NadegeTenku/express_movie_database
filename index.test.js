@@ -44,9 +44,16 @@ describe('Movie Database', function () {
     })
     
 
-    test('movies have genre', async() => {
-        const testMovie = await Movie.findOne({where: {genre: 'Fiction'}});
+    test('has a movie', async() => {
+        const testMovie = await Movie.findOne({
+            where: {
+                genre: 'Fiction'
+            }
+        });
         expect(testMovie.genre).toBe('Fiction')
+        expect(testMovie.title).toBe('Avatar')
+        expect(testMovie.release).toBe('2009-12-18')
+        expect(testMovie.rating).toBe(4.5)
     })
 
     test('movies have genre', async() => {
