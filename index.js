@@ -6,36 +6,37 @@ const {Cast} = require('./models/Cast')
 
 //belongsTo creates the association between the Movie and the Crew which generates the ID for the model.
 Movie.hasMany(Crew)
-Crew.belongsTo(Movie)
-
 Movie.hasMany(Cast)
+Crew.belongsTo(Movie)
 Cast.belongsTo(Movie)
+Cast.hasOne(Crew)
+
 
 const indexMovie = [
     {
         genre: 'Action', 
         title: 'Venom', 
-        release: '2018/10/05', 
+        release: '2018-10-05', 
         rating: 4.5
     }, {
         genre: 'Action', 
         title: 'Hard to kill', 
-        release:'1990/02/09', 
+        release:'1990-02-09', 
         rating: 3.7
     }, {
         genre: 'Romance', 
         title: 'The Proposal', 
-        release: '2009/06/19', 
+        release: '2009-06-19', 
         rating: 4.7
     }, {
         genre: 'Fiction', 
         title: 'Avatar', 
-        release: '2009/12/18', 
+        release: '2009-12-18', 
         rating: 4.5
     }, {
         genre: 'Horror', 
         title: 'Drag me to hell', 
-        release: '2009/05/29', 
+        release: '2009-05-29', 
         rating: 4.0
     }
 ]

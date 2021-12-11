@@ -1,34 +1,35 @@
+const {sequelize} = require('./db')
 const {Movie} = require('./models/Movie')
 const {Crew} = require('./models/Crew')
 const {Cast} = require('./models/Cast')
-const {sequelize} = require('./db')
 
 describe('Movie Database', function () {
 
      beforeAll(async() => {
         await sequelize.sync({force: true})
         const arrayOfMovies = [
-            {genre: 'Action', title: 'Venom', release: '2018/10/05', rating: 4.5},
-            {genre: 'Action', title: 'Hard to kill', release: '1990/02/09', rating: 3.7},
-            {genre: 'Romance', title: 'The Proposal', release: '2009/06/19', rating: 4.7},
-            {genre: 'Fiction', title: 'Avatar', release: '2009/12/18', rating: 4.5},
-            {genre: 'Horror', title: 'Drag me to hell', release: '2009/05/29', rating: 4.0}
+            {genre: 'Action', title: 'Venom', release: '2018-10-05', rating: 4.5},
+            {genre: 'Action', title: 'Hard to kill', release: '1990-02-09', rating: 3.7},
+            {genre: 'Romance', title: 'The Proposal', release: '2009-06-19', rating: 4.7},
+            {genre: 'Fiction', title: 'Avatar', release: '2009-12-18', rating: 4.5},
+            {genre: 'Horror', title: 'Drag me to hell', release: '2009-05-29', rating: 4.0}
         ]
            await Movie.bulkCreate(arrayOfMovies)
       
 
-        const crew1 =  {position: 'Director', name: 'Ruben Fleischer', department: 0}
+
+        const crew =  {position: 'Director', name: 'Ruben Fleischer', department: 0}
+            await Crew.create(crew)
+
+        const crew1 =  {position: 'Camera Operator', name: 'Michael Watson', department: 288}
             await Crew.create(crew1)
 
-        const crew2 =  {position: 'Camera Operator', name: 'Michael Watson', department: 288}
+        const crew2 =  {position: 'Cast', name: 'John Papsidera', department: 0}
             await Crew.create(crew2)
 
-        const crew3 =  {position: 'Cast', name: 'John Papsidera', department: 0}
+        const crew3 =  {position: 'Costume', name: 'Kelli Jones', department: 36} 
             await Crew.create(crew3)
 
-        const crew4 =  {position: 'Costume', name: 'Kelli Jones', department: 36}
-           
-            await Crew.create(crew4)
 
 
         const arrayOfCasts = [
@@ -40,9 +41,9 @@ describe('Movie Database', function () {
         ]
             await Cast.bulkCreate(arrayOfCasts)
 
-    
     })
     
+
     test('movies have genre', async() => {
         const testMovie = await Movie.findOne({where: {genre: 'Fiction'}});
         expect(testMovie.genre).toBe('Fiction')
@@ -59,14 +60,26 @@ describe('Movie Database', function () {
         expect (testMovie.title).toBe('The Proposal')
     })
 
-    test('crew has a name', async() => {
-        const testCrew = await Crew.findOne({where: {name: 'John Papsidera'}});
-        expect (testCrew.title).toBe('The Proposal')
+
+    test('crew members have positions', async() => {
+        const testCrew = await Crew.findAll({where: {position: 'Director'}});
+        expect (testCrew[0].position).toBe('Director')
     })
 
-    test('crew member has a position', async() => {
-        const testCrew = await Crew.findAll({where: {position: 'Cast'}});
-        expect (testCrew[0].position).toBe('Cast')
+    test('crew members have names', async() => {
+        const testCrew = await Crew.findOne({where: {name: 'Ruben Fleischer'}});
+        expect (testCrew.name).toBe('Ruben Fleischer')
+    })
+
+
+    // test('cast has a role_id', async() => {
+    //     const testCast = await Cast.findByPk(101);
+    //     expect (testCast.role_id).toBe(101)
+    // })
+
+    test('cast member has a name', async() => {
+        const testCast = await Cast.findOne({where: {name: 'Sandra Bullock'}});
+        expect (testCast.name).toBe('Sandra Bullock')
     })
 
     // test('movies can have many crew members', async() => {
@@ -75,6 +88,7 @@ describe('Movie Database', function () {
     //     const testCrew2 = await Crew.findOne({where: {position: 'Camera Operator'}})
     //     await testMovie.addCrew(testCrew1)
     //     await testMovie.addCrew(testCrew2)
+    //     const crewList = await testMovie.getCrew()
     //     expect(crewList.length).toBe(2)
     //     expect(crewList[0] instanceof Crew).toBeTruthy()
     //     expect(crewList[0].position).toMatch('Director')

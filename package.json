@@ -7,7 +7,6 @@
     "test": "jest",
     "test:report": "jest --coverage=true"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NadegeTenku/express_movie_database.git"
