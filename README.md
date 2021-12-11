@@ -8,7 +8,7 @@ Tested my models in small portions and then I added the test instances (single &
 Did my assiciations on my index.js file and then later created the server.js file in order to listen on my server(port 3000) and to test CRUD with express on Postman.
 
 
-                        <<ISSUES>>
+                       <<ISSUES>>
 Lines 75-78 on index.test.js have an error that I couldn't fix after numerous attempts.
 Lines 87 & 88 show errors that I could not fix as well. Please help me look at that entire section that I commented out for possible errors.
 Got an error message when I ran node index.js. I tried but didn't succeed in debugging it. Image linked below.
