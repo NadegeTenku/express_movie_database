@@ -56,7 +56,7 @@ const indexCast = [
     {role_id: 109, name: 'Denise OHare', gender: 'Male', age: 44}
 ]
 
-//basically inserts data into the db
+//inserts data into the db
 const index = async() => {
     try {
         await sequelize.sync({force: true}) 
